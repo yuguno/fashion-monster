@@ -9,11 +9,11 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
-
+from seacret_key import YOUR_CHANNEL_ACCESS_TOKEN, YOUR_CHANNEL_SECRET
 app = Flask(__name__)
 
-line_bot_api = LineBotApi('YOUR_CHANNEL_ACCESS_TOKEN')
-handler = WebhookHandler('YOUR_CHANNEL_SECRET')
+line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
+handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
 
 @app.route("/")
@@ -30,7 +30,7 @@ def callback():
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
 
-    # handle webhook body
+    # handle webhook body#
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
