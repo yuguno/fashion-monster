@@ -9,11 +9,11 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
-import seacret_key as s
+
 app = Flask(__name__)
 
-line_bot_api = LineBotApi(s.YOUR_CHANNEL_ACCESS_TOKEN)
-handler = WebhookHandler(s.YOUR_CHANNEL_SECRET)
+line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
+handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
 
 @app.route("/")
