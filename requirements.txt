@@ -73,7 +73,6 @@ simplegeneric==0.8.1
 singledispatch==3.4.0.3
 six==1.10.0
 sklearn==0.0
-TBB==0.1
 tensorflow==1.2.0
 terminado==0.6
 testpath==0.3.1
