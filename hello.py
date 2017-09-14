@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, ImageMessage, LocationMessage
+    MessageEvent, TextMessage, TextSendMessage, ImageMessage, LocationMessage, ConfirmTemplate, MessageTemplateAction, TemplateSendMessage, ButtonsTemplate, URITemplateAction, PostbackTemplateAction
 )
 import os
 
@@ -65,7 +65,7 @@ def handle_message(event):
 def handle_image(event):
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.id + "(๑╹ω╹๑ )")
+        TextSendMessage(text=event.message.id)
     )
 
 
@@ -83,18 +83,58 @@ def handle_location(event):
         event.reply_token,
         TextSendMessage(text=msg))
 
-#
-@handler.add(MessageEvent, message=ImageMessage)
-def save(event):
-    MessageId = str(event.message.id)
-    message_content = line_bot_api.get_message_content(MessageId)
-    with open(file_path, 'wb') as fd:
-        for chunk in message_content.iter_content():
-            fd.write(chunk)
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="保存")
-            )
+#画像保存　コメントアウト中
+#@handler.add(MessageEvent, message=ImageMessage)
+#def save(event):
+#    MessageId = str(event.message.id)
+#    message_content = line_bot_api.get_message_content(MessageId)
+#    with open(file_path, 'wb') as fd:
+#        for chunk in message_content.iter_content():
+#            fd.write(chunk)
+#            line_bot_api.reply_message(
+#                event.reply_token,
+#                TextSendMessage(text="保存")
+#            )
+
+#@handler.add(MessageEvent, message=TextMessage)
+#def handle_message(event):
+#    line_bot_api.reply_message(
+#        event.reply_token,
+#        TextSendMessage(text=event.message.text))
+def confirm(event, MessageEvent):
+        if isinstance(event, MessageEvent):
+            text = event.message.text
+            #textがconfirmなら2択表示
+            if text == 'confirm':
+                confirm_template = ConfirmTemplate(text='Do it?', actions=[
+                    MessageTemplateAction(label='Yes', text='Yes!'),
+                    MessageTemplateAction(label='No', text='No!'),
+                ])
+                template_message = TemplateSendMessage(
+                    alt_text='Confirm alt text', template=confirm_template)
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    template_message
+                )
+            elif text == 'buttons':
+                buttons_template = ButtonsTemplate(
+                    title='My buttons sample', text='Hello, my buttons', actions=[
+                        URITemplateAction(
+                            label='Go to line.me', uri='https://line.me'),
+                        PostbackTemplateAction(label='ping', data='ping'),
+                        PostbackTemplateAction(
+                            label='ping with text', data='ping',
+                            text='ping'),
+                        MessageTemplateAction(label='Translate Rice', text='米')
+                    ])
+                template_message = TemplateSendMessage(
+                    alt_text='Buttons alt text', template=buttons_template)
+                line_bot_api.reply_message(event.reply_token, template_message)
+            else:
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=event.message.text)
+                )
 
 if __name__ == "__main__":
     app.run()
