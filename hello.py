@@ -86,6 +86,10 @@ def save(event):
     with open(file_path, 'wb') as fd:
         for chunk in message_content.iter_content():
             fd.write(chunk)
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="保存")
+            )
 
 if __name__ == "__main__":
     app.run()
