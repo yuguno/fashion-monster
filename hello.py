@@ -103,9 +103,6 @@ def handle_location(event):
 #        TextSendMessage(text=event.message.text))
 def confirm_message(event):
             text = event.message.text
-            line_bot_api.reply_message(
-                    event.reply_token,
-                    TextSendMessage(text=event.message.text))
             #textがconfirmなら2択表示
             if text == 'confirm':
                 confirm_template = ConfirmTemplate(text='Do it?', actions=[
