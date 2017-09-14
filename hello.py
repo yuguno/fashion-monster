@@ -96,12 +96,12 @@ def handle_location(event):
 #                TextSendMessage(text="保存")
 #            )
 
-@handler.add(MessageEvent, text=TextMessage)
+@handler.add(MessageEvent, message=TextMessage)
 #def handle_message(event):
 #    line_bot_api.reply_message(
 #        event.reply_token,
 #        TextSendMessage(text=event.message.text))
-def confirm(event):
+def confirm_message(event):
             text = event.message.text
             #textがconfirmなら2択表示
             if text == 'confirm':
