@@ -54,13 +54,6 @@ def callback():
     return 'OK'
 
 
-#@handler.add(MessageEvent, message=TextMessage)
-#def handle_message(event):
-#    line_bot_api.reply_message(
-#        event.reply_token,
-#        TextSendMessage(text=event.message.text))
-
-
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image(event):
     line_bot_api.reply_message(
@@ -97,10 +90,6 @@ def handle_location(event):
 #            )
 
 @handler.add(MessageEvent, message=TextMessage)
-#def handle_message(event):
-#    line_bot_api.reply_message(
-#        event.reply_token,
-#        TextSendMessage(text=event.message.text))
 def confirm_message(event):
             text = event.message.text
             #textがconfirmなら2択表示
@@ -130,6 +119,7 @@ def confirm_message(event):
                     alt_text='Buttons alt text', template=buttons_template)
                 line_bot_api.reply_message(event.reply_token, template_message)
             else:
+                #送られてきたテキストを返す
                 line_bot_api.reply_message(
                     event.reply_token,
                     TextSendMessage(text=event.message.text)
