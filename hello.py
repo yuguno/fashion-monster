@@ -79,7 +79,8 @@ def handle_location(event):
         event.reply_token,
         TextSendMessage(text=msg))
 
-
+#
+@handler.add(MessageEvent, message=ImageMessage)
 def save(event):
     MessageId = str(event.message.id)
     message_content = line_bot_api.get_message_content(MessageId)
