@@ -7,18 +7,17 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,ImageMessage, LocationMessage
+    MessageEvent, TextMessage, TextSendMessage, ImageMessage, LocationMessage
 )
 import os
 
 app = Flask(__name__)
 
-#Lineのアクセスキー
+# Lineのアクセスキー
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
 YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
-
 
 
 @app.route("/")
@@ -60,13 +59,15 @@ def handle_message(event):
         event.reply_token,
         TextSendMessage(text=event.message.text))
 
+
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image(event):
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text='画像です')
+        TextSendMessage(text=event.message.id)
     )
-    
+
+
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location(event):
     lat = str(event.message.latitude)
@@ -74,8 +75,9 @@ def handle_location(event):
     msg = ('your location is ' + lat + ',' + lng)
 
     line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=msg))
+        event.reply_token,
+        TextSendMessage(text=msg))
+
 
 if __name__ == "__main__":
     app.run()
