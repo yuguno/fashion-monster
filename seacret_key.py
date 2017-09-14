@@ -1,2 +1,0 @@
-ACCESS_TOKEN = 'HOGEHOGE'
-CHANNEL_SECRET = 'fugafuga'
