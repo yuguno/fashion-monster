@@ -72,6 +72,8 @@ def handle_image(event):
 def handle_location(event):
     lat = str(event.message.latitude)
     lng = str(event.message.longtitude)
+    print(lat)
+    print(lng)
     msg = ('your location is ' + lat + ',' + lng)
 
     line_bot_api.reply_message(
