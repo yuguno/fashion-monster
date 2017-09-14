@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    MessageEvent, TextMessage, TextSendMessage,LocationMessage
 )
 from secret_key import ACCSESS_TOKEN, SECRET_KEY
 
@@ -56,6 +56,15 @@ def handle_message(event):
         event.reply_token,
         TextSendMessage(text=event.message.text))
 
+@handler.add(MessageEvent, message=LocationMessage)
+def handle_location(event):
+    lat = str(event.message.latitude)
+    lng = str(event.message.longtitude)
+    msg = ('your location is ' + lat + ',' + lng)
+
+    line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=msg))
 
 if __name__ == "__main__":
     app.run()
