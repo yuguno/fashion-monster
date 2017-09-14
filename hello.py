@@ -71,7 +71,7 @@ def handle_image(event):
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location(event):
     lat = str(event.message.latitude)
-    lng = str(event.message.longtitude)
+    lng = str(event.message.longitude)
     print(lat)
     print(lng)
     msg = ('your location is ' + lat + ',' + lng)
