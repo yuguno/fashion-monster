@@ -61,12 +61,12 @@ def handle_message(event):
         TextSendMessage(text=event.message.text))
 
 
-@handler.add(MessageEvent, message=ImageMessage)
-def handle_image(event):
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.id)
-    )
+#@handler.add(MessageEvent, message=ImageMessage)
+#def handle_image(event):
+#    line_bot_api.reply_message(
+#        event.reply_token,
+#        TextSendMessage(text=event.message.id)
+#    )
 
 
 @handler.add(MessageEvent, message=LocationMessage)
