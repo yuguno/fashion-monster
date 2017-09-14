@@ -9,16 +9,17 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
+from secret_key import ACCSESS_TOKEN, SECRET_KEY
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi('YOUR_CHANNEL_ACCESS_TOKEN')
-handler = WebhookHandler('YOUR_CHANNEL_SECRET')
+line_bot_api = LineBotApi('VXNRAqHeh3B/E2LoCK1LnNzmYgHXxXJLGBtBJE1r9NdY76HIhvJen/9xc/wT68QfLhi/KXQNmIAGw3EWqPoZQxg30sxWp+UYzVkT9+YfKBpS7ujJvnLpaNcPT5wR4d17of6uUadb/IgJM/oHIVhDTQdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('430d63079d498a359bd759a95713831f')
 
 
 @app.route("/")
 def route_dir():
-    return "Hello world"
+    return """Hello world""""
 
 
 @app.route("/callback", methods=['POST'])
