@@ -74,6 +74,8 @@ def handle_location(event):
     lat = str(event.message.latitude)
     lng = str(event.message.longtitude)
     msg = ('your location is ' + lat + ',' + lng)
+    print(lat)
+    print(lng)
 
     line_bot_api.reply_message(
         event.reply_token,
