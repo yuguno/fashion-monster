@@ -57,7 +57,7 @@ def callback():
 def handle_follow(event):
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text="仕様説明")
+        TextSendMessage(text="登録友達追加ありがとうございます")
     )
 
 @handler.add(MessageEvent, message=ImageMessage)
