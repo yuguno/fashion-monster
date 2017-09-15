@@ -126,8 +126,8 @@ def confirm_message(event):
                 line_bot_api.reply_message(event.reply_token, template_message)
             else:
                 #送られてきたテキストを返す
-                test_text = multi_text('あらいさーん', 'またやってしまったねぇ')
                 print(event.message)
+                test_text = test now
                 line_bot_api.reply_message(
                     event.reply_token,
                     TextSendMessage(text=test_text)
