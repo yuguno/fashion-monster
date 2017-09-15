@@ -58,8 +58,6 @@ def handle_follow(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="登録友達追加ありがとうございます"),
-        event.reply_token,
-        TextSendMessage(text="位置情報の登録お願いします"),
     )
 
 @handler.add(MessageEvent, message=ImageMessage)
