@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, ImageMessage, LocationMessage, ConfirmTemplate, MessageTemplateAction, TemplateSendMessage, ButtonsTemplate, URITemplateAction, PostbackTemplateAction
+    FollowEvent, MessageEvent, TextMessage, TextSendMessage, ImageMessage, LocationMessage, ConfirmTemplate, MessageTemplateAction, TemplateSendMessage, ButtonsTemplate, URITemplateAction, PostbackTemplateAction
 )
 import os
 
@@ -53,6 +53,12 @@ def callback():
 
     return 'OK'
 
+@handler.add(MessageEvent, message=FollowEvent)
+def handle_follow(event):
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text="仕様説明")
+    )
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image(event):
