@@ -21,20 +21,6 @@ line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
 
-def multi_text(str1, str2):
-    obj1 = \
-        {
-            "type":"text",
-            "text":str1
-        }
-    obj2 = \
-        {
-            "type":"text",
-            "type":str2
-        }
-    return [obj1, obj2]
-
-
 @app.route("/")
 def route_dir():
     html = """
@@ -140,7 +126,7 @@ def confirm_message(event):
                 line_bot_api.reply_message(event.reply_token, template_message)
             else:
                 #送られてきたテキストを返す
-                test_text = multi_text('あらいさーん', 'またやってしまったねぇ')
+                test_text = ['あらいさーん', 'またやってしまったねぇ']
                 line_bot_api.reply_message(
                     event.reply_token,
                     TextSendMessage(text=test_text)
