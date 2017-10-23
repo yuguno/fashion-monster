@@ -1,3 +1,4 @@
+# coding=utf-8
 from flask import Flask, request, abort
 
 from linebot import (
@@ -7,7 +8,8 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    FollowEvent, MessageEvent, TextMessage, TextSendMessage, ImageMessage, LocationMessage, ConfirmTemplate, MessageTemplateAction, TemplateSendMessage, ButtonsTemplate, URITemplateAction, PostbackTemplateAction
+    FollowEvent, MessageEvent, TextMessage, TextSendMessage, ImageMessage, LocationMessage, ConfirmTemplate,
+    MessageTemplateAction, TemplateSendMessage, ButtonsTemplate, URITemplateAction, PostbackTemplateAction
 )
 import os
 
@@ -53,12 +55,14 @@ def callback():
 
     return 'OK'
 
+
 @handler.add(FollowEvent)
 def handle_follow(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="登録友達追加ありがとうございます"),
     )
+
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image(event):
@@ -82,9 +86,10 @@ def handle_location(event):
         event.reply_token,
         TextSendMessage(text=msg))
 
-#画像保存　コメントアウト中
-#@handler.add(MessageEvent, message=ImageMessage)
-#def save(event):
+
+# 画像保存　コメントアウト中
+# @handler.add(MessageEvent, message=ImageMessage)
+# def save(event):
 #    MessageId = str(event.message.id)
 #    message_content = line_bot_api.get_message_content(MessageId)
 #    with open(file_path, 'wb') as fd:
@@ -97,41 +102,42 @@ def handle_location(event):
 
 @handler.add(MessageEvent, message=TextMessage)
 def confirm_message(event):
-            text = event.message.text
-            #textがconfirmなら2択表示
-            if text == 'confirm':
-                confirm_template = ConfirmTemplate(text='Do it?', actions=[
-                    MessageTemplateAction(label='Yes', text='Yes!'),
-                    MessageTemplateAction(label='No', text='No!'),
-                ])
-                template_message = TemplateSendMessage(
-                    alt_text='Confirm alt text', template=confirm_template)
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    template_message
-                )
-            elif text == 'buttons':
-                buttons_template = ButtonsTemplate(
-                    title='My buttons sample', text='Hello, my buttons', actions=[
-                        URITemplateAction(
-                            label='Go to line.me', uri='https://line.me'),
-                        PostbackTemplateAction(label='ping', data='ping'),
-                        PostbackTemplateAction(
-                            label='ping with text', data='ping',
-                            text='ping'),
-                        MessageTemplateAction(label='Translate Rice', text='米')
-                    ])
-                template_message = TemplateSendMessage(
-                    alt_text='Buttons alt text', template=buttons_template)
-                line_bot_api.reply_message(event.reply_token, template_message)
-            else:
-                #送られてきたテキストを返す
-                print(event.message)
-                test_text = "test now"
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    TextSendMessage(text=test_text)
-                )
+    text = event.message.text
+    # textがconfirmなら2択表示
+    if text == 'confirm':
+        confirm_template = ConfirmTemplate(text='Do it?', actions=[
+            MessageTemplateAction(label='Yes', text='Yes!'),
+            MessageTemplateAction(label='No', text='No!'),
+        ])
+        template_message = TemplateSendMessage(
+            alt_text='Confirm alt text', template=confirm_template)
+        line_bot_api.reply_message(
+            event.reply_token,
+            template_message
+        )
+    elif text == 'buttons':
+        buttons_template = ButtonsTemplate(
+            title='My buttons sample', text='Hello, my buttons', actions=[
+                URITemplateAction(
+                    label='Go to line.me', uri='https://line.me'),
+                PostbackTemplateAction(label='ping', data='ping'),
+                PostbackTemplateAction(
+                    label='ping with text', data='ping',
+                    text='ping'),
+                MessageTemplateAction(label='Translate Rice', text='米')
+            ])
+        template_message = TemplateSendMessage(
+            alt_text='Buttons alt text', template=buttons_template)
+        line_bot_api.reply_message(event.reply_token, template_message)
+    else:
+        # 送られてきたテキストを返す
+        print(event.message)
+        test_text = "test now"
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=test_text)
+        )
+
 
 if __name__ == "__main__":
     app.run()
