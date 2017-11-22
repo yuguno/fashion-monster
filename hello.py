@@ -4,10 +4,12 @@ from linebot import (
     LineBotApi, WebhookHandler
 )
 from linebot.exceptions import (
-    InvalidSignatureError
+    InvalidSignatureError, LineBotApiError
 )
 from linebot.models import (
-    FollowEvent, MessageEvent, TextMessage, TextSendMessage, ImageMessage, LocationMessage, ConfirmTemplate, MessageTemplateAction, TemplateSendMessage, ButtonsTemplate, URITemplateAction, PostbackTemplateAction
+    FollowEvent, MessageEvent, TextMessage, TextSendMessage, ImageMessage,
+    LocationMessage, ConfirmTemplate, MessageTemplateAction, TemplateSendMessage,
+    ButtonsTemplate, URITemplateAction, PostbackTemplateAction
 )
 import os
 
@@ -94,6 +96,11 @@ def handle_location(event):
 #                event.reply_token,
 #                TextSendMessage(text="保存")
 #            )
+
+@handler.add(MessageEvent)
+def push_message():
+        line_bot_api.reply_message('<to>',TextMessage(text='message1'))
+
 
 @handler.add(MessageEvent, message=TextMessage)
 def confirm_message(event):
