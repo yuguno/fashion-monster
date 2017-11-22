@@ -8,14 +8,11 @@ from linebot.exceptions import (
     InvalidSignatureError, LineBotApiError
 )
 from linebot.models import (
-<<<<<<< HEAD
     FollowEvent, MessageEvent, TextMessage, TextSendMessage, ImageMessage,
     LocationMessage, ConfirmTemplate, MessageTemplateAction, TemplateSendMessage,
-    ButtonsTemplate, URITemplateAction, PostbackTemplateAction
-=======
+    ButtonsTemplate, URITemplateAction, PostbackTemplateAction,
     FollowEvent, MessageEvent, TextMessage, TextSendMessage, ImageMessage, LocationMessage, ConfirmTemplate,
     MessageTemplateAction, TemplateSendMessage, ButtonsTemplate, URITemplateAction, PostbackTemplateAction
->>>>>>> 4f51956fac301b93cbaa9acdb7f7775b85d781ee
 )
 import os
 
