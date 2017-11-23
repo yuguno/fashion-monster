@@ -75,13 +75,26 @@ def handle_follow(event):
 #    )
 
 @handler.add(MessageEvent, message=ImageMessage)
-def image_message(event):
+def handle_content_message(event):
+    isinstance(event.message, ImageMessage):
+        ext = 'jpg'
+        
+    message_content = line_bot_api.get_message_content(event.message.id)
+    with tempfile.NamedTemporaryFile(dir=static_tmp_path, prefix=ext + '-', delete=False) as tf:
+        for chunk in message_content.iter_content():
+            tf.write(chunk)
+        tempfile_path = tf.name
+
+    dist_path = tempfile_path + '.' + ext
+    dist_name = os.path.basename(dist_path)
+    os.rename(tempfile_path, dist_path)
+
     line_bot_api.reply_message(
-        event.reply_token,
-        ImageSendMessage(
-        url= ("https://api.line.me/v2/bot/message/ + event.message.id + /content"
-            )
-    )
+        event.reply_token, [
+            TextSendMessage(text='Save content.'),
+            TextSendMessage(text=request.host_url + os.path.join('static', 'tmp', dist_name))
+        ])
+
 
 
 @handler.add(MessageEvent, message=LocationMessage)
