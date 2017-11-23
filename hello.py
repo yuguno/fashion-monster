@@ -79,7 +79,7 @@ def image_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         ImageSendMessage(
-        url= "https://api.line.me/v2/bot/message/ + event.message.id + /content"
+        url= ("https://api.line.me/v2/bot/message/ + event.message.id + /content"
             )
     )
 
