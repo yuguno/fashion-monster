@@ -79,7 +79,7 @@ def image_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         ImageSendMessage(
-            url= ("https://api.line.me/v2/bot/message/" + event.message.id + "/content")
+        url= "https://api.line.me/v2/bot/message/ + event.message.id + /content"
             )
     )
 
@@ -149,7 +149,7 @@ def confirm_message(event):
     else:
         # 送られてきたテキストを返す
         print(event.message)
-        test_text = "adas"
+        test_text = "kokokok"
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=test_text)
