@@ -78,7 +78,7 @@ def handle_follow(event):
 def handle_content_message(event):
     isinstance(event.message, ImageMessage):
         ext = 'jpg'
-        
+
     message_content = line_bot_api.get_message_content(event.message.id)
     with tempfile.NamedTemporaryFile(dir=static_tmp_path, prefix=ext + '-', delete=False) as tf:
         for chunk in message_content.iter_content():
@@ -162,7 +162,7 @@ def confirm_message(event):
     else:
         # 送られてきたテキストを返す
         print(event.message)
-        test_text = "kokokok"
+        test_text = "oyu-"
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=test_text)
