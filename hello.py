@@ -66,12 +66,21 @@ def handle_follow(event):
         TextSendMessage(text="登録友達追加ありがとうございます"),
     )
 
+#画像IDを返す
+#@handler.add(MessageEvent, message=ImageMessage)
+#def handle_image(event):
+#    line_bot_api.reply_message(
+#        event.reply_token,
+#        TextSendMessage(text=event.message.id)
+#    )
 
 @handler.add(MessageEvent, message=ImageMessage)
-def handle_image(event):
+def image_message(event):
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.id)
+        ImageSendMessage(
+            url= ("https://api.line.me/v2/bot/message/" + event.message.id + "/content")
+            )
     )
 
 
@@ -105,7 +114,7 @@ def handle_location(event):
 
 @handler.add(MessageEvent)
 def push_message():
-        line_bot_api.reply_message('<to>',TextMessage(text='message1'))
+    line_bot_api.reply_message('<to>',TextMessage(text='message1'))
 
 
 @handler.add(MessageEvent, message=TextMessage)
@@ -140,7 +149,7 @@ def confirm_message(event):
     else:
         # 送られてきたテキストを返す
         print(event.message)
-        test_text = "test now"
+        test_text = "adas"
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=test_text)
