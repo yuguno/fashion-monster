@@ -74,33 +74,14 @@ def handle_follow(event):
 #        TextSendMessage(text=event.message.id)
 #    )
 
-@handler.add(MessageEvent, message=(ImageMessage, VideoMessage, AudioMessage))
-def handle_content_message(event):
-    if isinstance(event.message, ImageMessage):
-        ext = 'jpg'
-    elif isinstance(event.message, VideoMessage):
-        ext = 'mp4'
-    elif isinstance(event.message, AudioMessage):
-        ext = 'm4a'
-    else:
-        return
-
-    message_content = line_bot_api.get_message_content(event.message.id)
-    with tempfile.NamedTemporaryFile(dir=static_tmp_path, prefix=ext + '-', delete=False) as tf:
-        for chunk in message_content.iter_content():
-            tf.write(chunk)
-        tempfile_path = tf.name
-
-    dist_path = tempfile_path + '.' + ext
-    dist_name = os.path.basename(dist_path)
-    os.rename(tempfile_path, dist_path)
-
+#https://api.line.me/v2/bot/message/{messageId}/content
+@handler.add(MessageEvent, message=ImageMessage)
+def image_message(event):
+    message_content = line_bot_api.get_message_content('event.message.id')
     line_bot_api.reply_message(
-        event.reply_token, [
-            TextSendMessage(text='Save content.'),
-            TextSendMessage(text=request.host_url + os.path.join('static', 'tmp', dist_name))
-        ])
-
+        event.reply_token,
+        ImageSendMessage(url=message_content)
+    )
 
 
 @handler.add(MessageEvent, message=LocationMessage)
@@ -168,7 +149,7 @@ def confirm_message(event):
     else:
         # 送られてきたテキストを返す
         print(event.message)
-        test_text = "oyu-2"
+        test_text = "kokokok"
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=test_text)
