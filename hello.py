@@ -74,10 +74,16 @@ def handle_follow(event):
 #        TextSendMessage(text=event.message.id)
 #    )
 
-@handler.add(MessageEvent, message=ImageMessage)
+@handler.add(MessageEvent, message=(ImageMessage, VideoMessage, AudioMessage))
 def handle_content_message(event):
-    isinstance(event.message, ImageMessage):
+    if isinstance(event.message, ImageMessage):
         ext = 'jpg'
+    elif isinstance(event.message, VideoMessage):
+        ext = 'mp4'
+    elif isinstance(event.message, AudioMessage):
+        ext = 'm4a'
+    else:
+        return
 
     message_content = line_bot_api.get_message_content(event.message.id)
     with tempfile.NamedTemporaryFile(dir=static_tmp_path, prefix=ext + '-', delete=False) as tf:
@@ -162,7 +168,7 @@ def confirm_message(event):
     else:
         # 送られてきたテキストを返す
         print(event.message)
-        test_text = "oyu-"
+        test_text = "oyu-2"
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=test_text)
